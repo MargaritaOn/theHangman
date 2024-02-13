@@ -119,3 +119,24 @@ img {
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 800px) {
+  .letter {
+    width: 15px;
+    height: 15px;
+  }
+
+  #remainingLetters {
+    width: 20px;
+    height: 20px;
+  }
+
+  #letPlay {
+    width: 30px;
+  }
+
+  #restart {
+    width: 20px;
+    height: 20px;
+  }
+}
