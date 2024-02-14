@@ -1,6 +1,32 @@
 const words = ["castle", "centre", "artist", "dinner", "eleven", "doctor"];
+
+const a = await fetch("https://raw.githubusercontent.com/kkrypt0nn/wordlists/main/wordlists/discovery/most_common.txt")
+    .then(response => {
+        return response.text()
+    });
+
+const libraryRaw = a.split(/\r?\n/);
+// console.log(checkWord(library));
+
+const library = []
+
+for (let i = 0; i < libraryRaw.length; i++) {
+    if (checkWord(libraryRaw[i])) {
+        library.push(libraryRaw[i]);
+    }
+}
+
+function checkWord(someWord) {
+    if (someWord.length < 6 || someWord.length > 7 || /\d/.test(someWord)) {
+        return false;
+    } 
+    return true;
+}
+
+// console.log(library);
+
 const guessWord = document.getElementById("word");
-const random = words[Math.floor(Math.random() * words.length)];
+const random = library[Math.floor(Math.random() * library.length)];
 const remainingLettersContainer = document.getElementById("remainingLetters");
 
 
@@ -81,18 +107,21 @@ function gameOn(letter) {
         chosenLetter.classList.add("gradient");
         remainingLetters = remainingLetters - 1;
         remainingLettersContainer.innerText = remainingLetters;
-        if (remainingLetters == 5) {
+
+        if (remainingLetters == 6) {
             hangingPost.src = "Hangman_Picture2.png";
-        } else if (remainingLetters == 4) {
+        } else if (remainingLetters == 5) {
             hangingPost.src = "Hangman_Picture3.png";
-        } else if (remainingLetters == 3) {
+        } else if (remainingLetters == 4) {
             hangingPost.src = "Hangman_Picture4.png";
-        } else if (remainingLetters == 2) {
+        } else if (remainingLetters == 3) {
             hangingPost.src = "Hangman_Picture5.png";
-        } else if (remainingLetters == 1) {
+        } else if (remainingLetters == 2) {
             hangingPost.src = "Hangman_Picture6.png";
-        } else if (remainingLetters == 0) {
+        } else if (remainingLetters == 1) {
             hangingPost.src = "Hangman_Picture7.png";
+        } else if (remainingLetters == 0) {
+            hangingPost.src = "Hangman_Picture8.png";
         }
 
 
