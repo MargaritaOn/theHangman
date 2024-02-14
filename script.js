@@ -6,7 +6,7 @@ const remainingLettersContainer = document.getElementById("remainingLetters");
 
 console.log(random);
 
-const playButton = document.getElementById("letPlay");
+
 const restartButton = document.getElementById("restart");
 
 restartButton.addEventListener("click", () => {
@@ -20,12 +20,10 @@ for (let i = 0; i < random.length; i++) {
     encryptedWord[i] = "_";
     wordArray[i] = random.charAt(i);
 }
+if (encryptedWord.toString() != wordArray.toString()) {
+    guessWord.append(encryptedWord);
+}
 
-playButton.addEventListener("click", () => {
-    if (encryptedWord.toString() != wordArray.toString()) {
-        guessWord.append(encryptedWord);
-    }
-});
 
 let remainingLetters = random.length;
 remainingLettersContainer.innerText = remainingLetters;
@@ -33,12 +31,12 @@ remainingLettersContainer.innerText = remainingLetters;
 let chosenLetterArray = [];
 
 function letterPicked(pressedKey) {
-for (let i = 0; i < chosenLetterArray.length; i++) {
-    if (chosenLetterArray[i] == pressedKey) {
-        return true;
-    }
-} 
-return false;
+    for (let i = 0; i < chosenLetterArray.length; i++) {
+        if (chosenLetterArray[i] == pressedKey) {
+            return true;
+        }
+    } 
+    return false;
 }
 
 let hangingPost = document.getElementById("post");
@@ -56,14 +54,14 @@ window.addEventListener("keypress", (e) => {
             encryptedWord[i] = e.key;
             guessWord.innerText = encryptedWord;
             chosenLetter = document.getElementById(e.key);
-            chosenLetter.style.backgroundColor = "grey";
+            chosenLetter.classList.add("gradient");
 
         }
     }
     if (wrongGuess(e.key) == true && remainingLetters > 0) {
         chosenLetter = document.getElementById(e.key);
         chosenLetter.style.backgroundColor = "grey";
-        remainingLetters = remainingLetters - 1;
+        chosenLetter.classList.add("gradient");
         remainingLettersContainer.innerText = remainingLetters;
         if (remainingLetters == 5) {
             hangingPost.src = "Hangman_Picture2.png";
