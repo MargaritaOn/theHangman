@@ -35,33 +35,51 @@ function letterPicked(pressedKey) {
         if (chosenLetterArray[i] == pressedKey) {
             return true;
         }
-    } 
+    }
     return false;
 }
 
 let hangingPost = document.getElementById("post");
 
+// function to get button from html
+
+const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+for (let i = 0; i < alphabet.length; i++) {
+    const button = document.getElementById(alphabet[i]);
+    button.addEventListener("click", (e) => {
+        gameOn(alphabet[i]);
+    });
+}
+
+
 window.addEventListener("keypress", (e) => {
-    if (letterPicked(e.key) == true) {
+
+    gameOn(e.key);
+}
+)
+
+function gameOn(letter) {
+    if (letterPicked(letter) == true) {
         return;
     }
-
     let chosenLetter;
-    chosenLetterArray.push(e.key);
+    chosenLetterArray.push(letter);
     console.log(chosenLetterArray);
     for (let i = 0; i < wordArray.length; i++) {
-        if (e.key == wordArray[i] && remainingLetters > 0) {
-            encryptedWord[i] = e.key;
+        if (letter == wordArray[i] && remainingLetters > 0) {
+            encryptedWord[i] = letter;
             guessWord.innerText = encryptedWord;
-            chosenLetter = document.getElementById(e.key);
+            chosenLetter = document.getElementById(letter);
             chosenLetter.classList.add("gradient");
 
         }
     }
-    if (wrongGuess(e.key) == true && remainingLetters > 0) {
-        chosenLetter = document.getElementById(e.key);
+    if (wrongGuess(letter) == true && remainingLetters > 0) {
+        chosenLetter = document.getElementById(letter);
         chosenLetter.style.backgroundColor = "grey";
         chosenLetter.classList.add("gradient");
+        remainingLetters = remainingLetters - 1;
         remainingLettersContainer.innerText = remainingLetters;
         if (remainingLetters == 5) {
             hangingPost.src = "Hangman_Picture2.png";
@@ -79,7 +97,7 @@ window.addEventListener("keypress", (e) => {
 
 
 
-    } else if (wrongGuess(e.key) == false) {
+    } else if (wrongGuess(letter) == false) {
         remainingLettersContainer.innerText = remainingLetters;
     }
 
@@ -89,7 +107,6 @@ window.addEventListener("keypress", (e) => {
         guessWord.innerText = `You lost! The word was ${random}`;
     }
 }
-)
 
 function wrongGuess(guess) {
     for (let i = 0; i < wordArray.length; i++) {
